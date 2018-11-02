@@ -1,0 +1,48 @@
+* {
+	box-shadow: border-box;
+	font-size: 1rem;
+}
+
+.container {
+	width: 600px;
+	margin: 100px auto 0 auto;
+	border: 1px solid black;
+	border-radius: 10px;
+	padding: 50px;
+	text-align: center;
+}
+
+.head {
+	display: flex;
+	flex-direction: row;
+	vertical-align: center;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+#username {
+	height: 30px;
+}
+
+button {
+	padding: 10px 20px;
+	height: 40px;
+	margin-left: 30px;
+}
+
+#inputText {
+	height: 30px;
+	width: 200px;
+}
+
+.right {
+	padding-left: 100px;
+}
+
+.center {
+	width: 50px;
+	margin: 0 auto;
+}
+
+.left {
+	padding-right: 100px;
+}

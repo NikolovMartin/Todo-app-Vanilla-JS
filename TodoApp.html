@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="TodoApp.css">
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="head">
+			<input type="text" placeholder="Username" id="usernameField">
+			<button onclick="logUser()" id="btnLogIn">Log in</button>
+
+		</div><!-- /.head -->
+
+		<div class="body">
+			<dic class="row">
+				<input type="text" placeholder="Text..." id="inputText">
+				<button onclick="newTodo()" id='btnCreate'>Create</button>
+			</dic><!-- /.row -->
+
+			<div class="row todos">
+				<h2 id="noTodos">
+					There are no todos
+				</h2><!-- /.noTodos -->
+
+				<ul id="ul" class="flex">
+
+				</ul><!-- /#ul -->
+			</div><!-- /.row -->
+		</div><!-- /.body -->
+	</div><!-- /.container -->
+
+	<script src="TodoApp.js"></script>
+</body>
+
+</html>
