@@ -6,22 +6,41 @@
 .container {
 	width: 600px;
 	margin: 100px auto 0 auto;
-	border: 1px solid black;
+	border: 5px solid slategray;
 	border-radius: 10px;
-	padding: 50px;
+	padding: 10px 50px 50px 50px;
 	text-align: center;
 	background-color: azure;
+}
+
+h1 {
+	font-size: 40px;
+	font-weight: 500;
+	font-family: Arial, Helvetica, sans-serif;
+	color: goldenrod;
 }
 
 .head {
 	display: flex;
 	flex-direction: row;
-	vertical-align: center;
+	align-items: center;
 	justify-content: center;
 	margin-bottom: 20px;
 }
+strong {
+	font-size: 25px;
+	font-weight: 500;
+}
+
 #username {
 	height: 30px;
+}
+
+#usernameField {
+	padding: 5px;
+	border: 1px solid rgb(212, 209, 209);
+	border-radius: 5px;
+	padding-left: 10px;
 }
 
 .userStyle {
@@ -43,6 +62,9 @@ button {
 #inputText {
 	height: 30px;
 	width: 200px;
+	border-radius: 5px;
+	border: 1px solid rgb(212, 209, 209);
+	padding-left: 10px;
 }
 
 .close {
@@ -98,7 +120,7 @@ button {
 }
 
 #ul li:hover {
-	background: rgb(85, 187, 99);
+	background: rgb(85, 181, 193);
 	font-size: 25px;
 }
 
@@ -116,7 +138,7 @@ button {
 }
 
 .checked {
-	background: #888 !important;
+	background: #443d3d !important;
 	color: #fff;
 	text-decoration: line-through;
 }

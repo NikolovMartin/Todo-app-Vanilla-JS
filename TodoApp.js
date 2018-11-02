@@ -6,92 +6,101 @@
 	const createBtn = doc.getElementById('btnCreate');
 	const noTodos = doc.getElementById('noTodos');
 
-	let greet = '';
-	let input = '';
-	let todo = '';
+	let greet = doc.createElement('p');
 	let username = '';
 
 	// Log User
 	logBtn.addEventListener('click', logUser);
 
 	function logUser() {
-		console.log(`'1- ${username}`);
+		username = usernameField.value;
 
-		if (logBtn.innerHTML == 'Log in') {
-			console.log(usernameField.value);
-			username = usernameField.value;
-
-			console.log(`'2-' ${username}`);
-			if (!username) {
-				alert('You must write Username!');
-				clear();
-				username = '';
-			} else {
-				greet = doc.createElement('p');
-				greet.innerHTML = `Hello <strong>${username}</strong>`;
-				head[0].prepend(greet);
-				usernameField.setAttribute('style', 'display:none');
-				logBtn.innerHTML = 'Log out';
-			}
-		} else {
+		if (logBtn.innerHTML == 'Log out') {
 			greet.setAttribute('style', 'display:none');
-			usernameField.setAttribute('style', 'display:block');
-			logBtn.innerHTML = 'Log in';
-			console.log(`'3-' ${username}`);
+			toggleVisibility(usernameField, true);
+			setLogBtnText('Log in');
 			clear();
+			return;
 		}
 
-		usernameField.value = '';
+		if (!username) {
+			alert('You must write Username!');
+			clear();
+			return;
+		}
+
+		greet.innerHTML = `Hello <strong>${username}</strong>`;
+
+		head[0].prepend(greet);
+
+		toggleVisibility(usernameField, false);
+		setLogBtnText('Log out');
+		clear();
 	}
 
 	// create new todo
 	createBtn.addEventListener('click', newTodo);
 
 	function newTodo() {
+		if (!textField.value) {
+			alert('You must write something!');
+			return;
+		}
+
+		if (!username) {
+			alert('First Log in Username!');
+			return;
+		}
+
 		const deleteBtn = doc.createElement('span');
 		const user = doc.createElement('span');
+
 		user.innerHTML = `${username}:`;
 		user.classList.add('userStyle');
 
-		//Add X button
+		addXBtn(deleteBtn);
+		createListItem(user, deleteBtn);
+	}
+
+	function addXBtn(deleteBtn) {
 		deleteBtn.innerHTML = 'X';
 		deleteBtn.classList.add('close');
 		deleteBtn.addEventListener('click', deleteTodo);
 		deleteBtn.setAttribute('id', 'delTodo');
+	}
 
-		// create li el.
+	function createListItem(user, deleteBtn) {
 		const li = doc.createElement('li');
 		li.classList.add('fLex');
 		li.classList.add('style');
-		li.addEventListener('click', done);
+		li.addEventListener('click', function() {
+			checked(this);
+		});
 
-		let inputText = textField.value;
+		inputText = textField.value;
 
-		//create todo
+		//append to li
 		let todo = doc.createTextNode(`${inputText}`);
 		li.appendChild(todo);
 		li.appendChild(deleteBtn);
 		li.appendChild(user);
-		if (inputText == '') {
-			alert('You must write something!');
-		} else {
-			if (username == '') {
-				alert('First Log in Username!');
-			} else {
-				doc.getElementById('ul').appendChild(li);
-				noTodos.setAttribute('style', 'display:none');
-				clear();
-			}
-		}
-		//clear input value
+
+		doc.getElementById('ul').appendChild(li);
+		toggleVisibility(noTodos, false);
 		textField.value = '';
+	}
 
-		//done
-		function done() {
-			li.classList.toggle('checked');
-		}
+	function checked(li) {
+		li.classList.toggle('checked');
+	}
 
-		//check li
+	function toggleVisibility(item, show) {
+		const display = show ? 'block' : 'none';
+		item.setAttribute('style', `display: ${display}`);
+	}
+
+	function setLogBtnText(text) {
+		logBtn.innerHTML = text;
 	}
 
 	// Delete
@@ -102,8 +111,8 @@
 		alert('Are you sure you want to delete this item?');
 		ul.removeChild(li);
 
-		if (ul.childNodes.length == 1) {
-			noTodos.setAttribute('style', 'display:block');
+		if (ul.childNodes.length === 1) {
+			toggleVisibility(noTodos, true);
 		}
 	}
 	//clear
