@@ -10,6 +10,7 @@
 	border-radius: 10px;
 	padding: 50px;
 	text-align: center;
+	background-color: azure;
 }
 
 .head {
@@ -23,10 +24,20 @@
 	height: 30px;
 }
 
+.userStyle {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	padding: 0 35px;
+	text-transform: uppercase;
+}
+
 button {
 	padding: 10px 20px;
 	height: 40px;
 	margin-left: 30px;
+	border-radius: 5px;
 }
 
 #inputText {
@@ -34,8 +45,19 @@ button {
 	width: 200px;
 }
 
-.right {
-	padding-left: 100px;
+.close {
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	padding: 0 16px;
+	color: rgb(235, 112, 112);
+	transition: 0.2s ease-in-out;
+}
+
+.close:hover {
+	font-size: 30px;
+	padding: 5px 16px;
 }
 
 .center {
@@ -45,4 +67,56 @@ button {
 
 .left {
 	padding-right: 100px;
+}
+
+.style {
+	border: 1px solid gray;
+	background-color: azure;
+	padding: 5px;
+	border-radius: 10px;
+	margin: 5px 0;
+	list-style-type: none;
+	cursor: pointer;
+	position: relative;
+	padding: 12px 8px 12px 40px;
+	background: rgb(214, 214, 214);
+	font-size: 18px;
+	transition: 0.2s;
+}
+
+#ul {
+	width: 90%;
+	margin: 30px auto;
+}
+
+#ul li {
+	position: relative;
+	cursor: pointer;
+}
+#ul li:nth-child(odd) {
+	background: #f9f9f9;
+}
+
+#ul li:hover {
+	background: rgb(85, 187, 99);
+	font-size: 25px;
+}
+
+#ul li.checked::before {
+	content: '';
+	position: absolute;
+	border-color: #fff;
+	border-style: solid;
+	border-width: 0 2px 2px 0;
+	top: 30%;
+	left: 16px;
+	transform: rotate(45deg);
+	height: 15px;
+	width: 7px;
+}
+
+.checked {
+	background: #888 !important;
+	color: #fff;
+	text-decoration: line-through;
 }
