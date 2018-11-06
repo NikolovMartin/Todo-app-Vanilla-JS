@@ -121,7 +121,8 @@ button {
 
 #ul li:hover {
 	background: rgb(85, 181, 193);
-	font-size: 25px;
+	font-size: 22px;
+	padding: 12px 8px 12px 40px;
 }
 
 #ul li.checked::before {
