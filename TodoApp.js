@@ -1,53 +1,51 @@
-((win, doc) => {
-	const usernameField = doc.getElementById('usernameField');
-	const head = doc.getElementsByClassName('head');
-	const textField = doc.getElementById('inputText');
-	const logBtn = doc.getElementById('btnLogIn');
-	const createBtn = doc.getElementById('btnCreate');
-	const noTodos = doc.getElementById('noTodos');
+function todoApp(win, doc) {
+	this.usernameField = doc.getElementById('usernameField');
+	this.head = doc.getElementsByClassName('head');
+	this.textField = doc.getElementById('inputText');
+	this.logBtn = doc.getElementById('btnLogIn');
+	this.createBtn = doc.getElementById('btnCreate');
+	this.noTodos = doc.getElementById('noTodos');
 
-	let greet = doc.createElement('p');
-	let username = '';
+	this.greet = doc.createElement('p');
+	this.username = '';
 
 	// Log User
-	logBtn.addEventListener('click', logUser);
 
-	function logUser() {
-		username = usernameField.value;
+	this.logUser = () => {
+		username = this.usernameField.value;
 
-		if (logBtn.innerHTML == 'Log out') {
-			greet.setAttribute('style', 'display:none');
-			toggleVisibility(usernameField, true);
-			setLogBtnText('Log in');
-			clear();
+		if (this.logBtn.innerHTML == 'Log out') {
+			this.greet.setAttribute('style', 'display:none');
+			this.toggleVisibility(usernameField, true);
+			this.setLogBtnText('Log in');
+			this.clear();
 			return;
 		}
 
 		if (!username) {
 			alert('You must write Username!');
-			clear();
+			this.clear();
 			return;
 		}
 
-		greet.innerHTML = `Hello <strong>${username}</strong>`;
-
-		head[0].prepend(greet);
-
-		toggleVisibility(usernameField, false);
-		setLogBtnText('Log out');
-		clear();
-	}
+		this.greet.innerHTML = `Hello <strong>${username}</strong>`;
+		this.greet.setAttribute('style', 'display:block');
+		this.head[0].prepend(this.greet);
+		this.toggleVisibility(this.usernameField, false);
+		this.setLogBtnText('Log out');
+		//this.clear();
+	};
 
 	// create new todo
-	createBtn.addEventListener('click', newTodo);
 
-	function newTodo() {
-		if (!textField.value) {
+	this.newTodo = () => {
+		if (!this.textField.value) {
 			alert('You must write something!');
 			return;
 		}
 
 		if (!username) {
+			console.log(username);
 			alert('First Log in Username!');
 			return;
 		}
@@ -58,26 +56,26 @@
 		user.innerHTML = `${username}:`;
 		user.classList.add('userStyle');
 
-		addXBtn(deleteBtn);
-		createListItem(user, deleteBtn);
-	}
+		this.addXBtn(deleteBtn);
+		this.createListItem(user, deleteBtn);
+	};
 
-	function addXBtn(deleteBtn) {
+	this.addXBtn = deleteBtn => {
 		deleteBtn.innerHTML = 'X';
 		deleteBtn.classList.add('close');
-		deleteBtn.addEventListener('click', deleteTodo);
+		deleteBtn.addEventListener('click', this.deleteTodo);
 		deleteBtn.setAttribute('id', 'delTodo');
-	}
+	};
 
-	function createListItem(user, deleteBtn) {
+	this.createListItem = (user, deleteBtn) => {
 		const li = doc.createElement('li');
 		li.classList.add('fLex');
 		li.classList.add('style');
-		li.addEventListener('click', function() {
-			checked(this);
+		li.addEventListener('click', () => {
+			this.checked(li);
 		});
 
-		inputText = textField.value;
+		inputText = this.textField.value;
 
 		//append to li
 		let todo = doc.createTextNode(`${inputText}`);
@@ -86,25 +84,25 @@
 		li.appendChild(user);
 
 		doc.getElementById('ul').appendChild(li);
-		toggleVisibility(noTodos, false);
-		textField.value = '';
-	}
+		this.toggleVisibility(noTodos, false);
+		this.textField.value = '';
+	};
 
-	function checked(li) {
+	this.checked = li => {
 		li.classList.toggle('checked');
-	}
+	};
 
-	function toggleVisibility(item, show) {
+	this.toggleVisibility = (item, show) => {
 		const display = show ? 'block' : 'none';
 		item.setAttribute('style', `display: ${display}`);
-	}
+	};
 
-	function setLogBtnText(text) {
-		logBtn.innerHTML = text;
-	}
+	this.setLogBtnText = text => {
+		this.logBtn.innerHTML = text;
+	};
 
 	// Delete
-	function deleteTodo() {
+	this.deleteTodo = () => {
 		let that = doc.getElementById('delTodo');
 		let li = that.parentElement;
 		let ul = that.parentElement.parentElement;
@@ -112,11 +110,17 @@
 		ul.removeChild(li);
 
 		if (ul.childNodes.length === 1) {
-			toggleVisibility(noTodos, true);
+			this.toggleVisibility(noTodos, true);
 		}
-	}
+	};
 	//clear
-	function clear() {
+	this.clear = () => {
 		usernameField.value = '';
-	}
-})(window, document);
+	};
+
+	this.logBtn.addEventListener('click', this.logUser);
+	this.createBtn.addEventListener('click', this.newTodo);
+	return this;
+}
+
+const instance = new todoApp(window, document);
