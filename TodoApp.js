@@ -11,54 +11,65 @@ class TodoApp {
 		this.createBtn = doc.getElementById('btnCreate');
 		this.noTodos = doc.getElementById('noTodos');
 		this.greet = doc.createElement('p');
+		this.deleteAllTodos = doc.getElementsByClassName('deleteAll')[0];
 		this.username = '';
 
 		// Methods
 		this.logUser = this.logUser.bind(this);
 		this.newTodo = this.newTodo.bind(this);
 		this.deleteTodo = this.deleteTodo.bind(this);
-		this.clear = this.clear.bind(this);
+		this.setUsernameField = this.setUsernameField.bind(this);
+		this.deleteAll = this.deleteAll.bind(this);
 
 		// Event Listeners
 		this.logBtn.addEventListener('click', this.logUser);
 		this.createBtn.addEventListener('click', this.newTodo);
+		this.deleteAllTodos.addEventListener('click', this.deleteAll);
 	}
 
+	/**
+	 * logUser
+	 */
 	logUser() {
 		this.username = this.usernameField.value;
 
 		if (this.logBtn.innerHTML == 'Log out') {
-			this.greet.setAttribute('style', 'display:none');
+			this.toggleVisibility(this.greet, false);
 			this.toggleVisibility(this.usernameField, true);
 			this.setLogBtnText('Log in');
-			this.clear();
+			this.setUsernameField();
+
 			return;
 		}
 
 		if (!this.username) {
 			alert('You must write Username!');
-			this.clear();
+
+			this.setUsernameField();
+
 			return;
 		}
 
 		this.greet.innerHTML = `Hello <strong>${this.username}</strong>`;
-		this.greet.setAttribute('style', 'display:block');
+		this.toggleVisibility(this.greet, true);
 		this.head[0].prepend(this.greet);
 		this.toggleVisibility(this.usernameField, false);
 		this.setLogBtnText('Log out');
-		//this.clear();
 	}
 
-	// create new todo
-
+	/**
+	 * Create new Todo
+	 */
 	newTodo() {
 		if (!this.textField.value) {
 			alert('You must write something!');
+
 			return;
 		}
 
 		if (!this.username) {
 			alert('First Log in Username!');
+
 			return;
 		}
 
@@ -68,10 +79,15 @@ class TodoApp {
 		user.innerHTML = `${this.username}:`;
 		user.classList.add('userStyle');
 
+		this.deleteAllTodos.classList.remove('disabled');
 		this.addXBtn(deleteBtn);
 		this.createListItem(user, deleteBtn);
 	}
 
+	/**
+	 * add X button
+	 * @param {object} deleteBtn
+	 */
 	addXBtn(deleteBtn) {
 		deleteBtn.innerHTML = 'X';
 		deleteBtn.classList.add('close');
@@ -81,16 +97,21 @@ class TodoApp {
 
 	createListItem(user, deleteBtn) {
 		const li = this.doc.createElement('li');
+
 		li.classList.add('fLex');
 		li.classList.add('style');
+
 		li.addEventListener('click', () => {
-			this.checked(li);
+			this.toggleChecked(li);
 		});
 
 		this.inputText = this.textField.value;
 
-		//append to li
+		/**
+		 * Append to li
+		 */
 		let todo = this.doc.createTextNode(`${this.inputText}`);
+
 		li.appendChild(todo);
 		li.appendChild(deleteBtn);
 		li.appendChild(user);
@@ -100,12 +121,13 @@ class TodoApp {
 		this.textField.value = '';
 	}
 
-	checked(li) {
+	toggleChecked(li) {
 		li.classList.toggle('checked');
 	}
 
 	toggleVisibility(item, show) {
 		const display = show ? 'block' : 'none';
+
 		item.setAttribute('style', `display: ${display}`);
 	}
 
@@ -113,25 +135,34 @@ class TodoApp {
 		this.logBtn.innerHTML = text;
 	}
 
-	// Delete
-	deleteTodo() {
+	deleteTodo(event) {
+		event.stopPropagation();
+
 		let that = this.doc.getElementById('delTodo');
 		let li = that.parentElement;
-		let ul = that.parentElement.parentElement;
+		let ul = li.parentElement;
+
 		alert('Are you sure you want to delete this item?');
+
 		ul.removeChild(li);
 
 		if (ul.childNodes.length === 1) {
 			this.toggleVisibility(noTodos, true);
 		}
 	}
-	//clear;
-	clear() {
-		usernameField.value = '';
+
+	deleteAll() {
+		if (confirm('Are you sure you want to delete all items?')) {
+			this.doc.getElementById('ul').innerHTML = '';
+			this.deleteAllTodos.classList.add('disabled');
+		}
 	}
 
-	//	this.logBtn.addEventListener('click', logUser);
-	//  createBtn.addEventListener('click', newTodo);
-	//return this;
+	/**
+	 * SetUsernameField
+	 */
+	setUsernameField() {
+		usernameField.value = '';
+	}
 }
 const App2 = new TodoApp(window, document);

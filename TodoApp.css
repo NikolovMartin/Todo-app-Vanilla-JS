@@ -58,6 +58,14 @@ button {
 	margin-left: 30px;
 	border-radius: 5px;
 }
+.deleteAll {
+	color: red;
+}
+.disabled {
+	opacity: 0.5;
+	color: black;
+	pointer-events: none;
+}
 
 #inputText {
 	height: 30px;
